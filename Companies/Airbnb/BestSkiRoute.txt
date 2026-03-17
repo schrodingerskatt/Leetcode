@@ -1,0 +1,60 @@
+Problem Statement : 
+
+You are skiing down from the top of a mountain and want to maximize your score when you reach the 
+finish. There are multiple routes you can take, and each route has checkpoints with different point 
+values associated with them. Your final score will be determined by the sum of all the checkpoints
+you hit minus the total travel time. Find the optimal route to maximize your final score.
+
+Part 1 — Single Starting Point
+
+Given travel_time (edges between checkpoints with travel times) and points (point values at each 
+checkpoint), find the path from START to any FINISH that maximizes: sum(points) - sum(travel_time).
+
+Input : 
+
+       START(0)
+           /       \
+          6         8
+         /           \
+     A[18]          B[26]
+        | \        /   |
+        3  7      4    6
+        |   \    /     |
+      C[9]  D[15]    E[20]
+         \    |       /
+          2   5      4
+           \  |     /
+              F[6]
+             /   \
+           7      9
+          /        \
+      FINISH_1[5]   FINISH_2[11]
+
+travel_time = [
+    ["START", "A", "6"],
+    ["START", "B", "8"],
+    ["A", "C", "3"],
+    ["A", "D", "7"],
+    ["B", "D", "4"],
+    ["B", "E", "6"],
+    ["C", "F", "2"],
+    ["D", "F", "5"],
+    ["E", "F", "4"],
+    ["F", "FINISH_1", "7"],
+    ["F", "FINISH_2", "9"]
+]
+
+points = [
+    ["START", "0"],
+    ["A", "18"],
+    ["B", "26"],
+    ["C", "9"],
+    ["D", "15"],
+    ["E", "20"],
+    ["F", "6"],
+    ["FINISH_1", "5"],
+    ["FINISH_2", "11"]
+]
+
+Output : ["START", "B", "E", "F", "FINISH_2"] with a score of 36
+(63 points - 27 travel time)

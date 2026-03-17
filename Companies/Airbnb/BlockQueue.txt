@@ -1,0 +1,75 @@
+Problem Statement : 
+
+Design a queue data structure that mimics memory allocation patterns. The queue must store elements 
+in fixed-size blocks (arrays), where each block has a maximum capacity.
+
+Memory Model:
+
+Each block is an array with a fixed maximum size
+When a block is full and a new element arrives, allocate a new block
+When removing elements causes a block to become empty, the block should be "freed" (removed)
+Implement a queue with the following operations:
+
+enqueue(val) - Add an element to the back of the queue
+dequeue() - Remove and return the element from the front of the queue
+peek() - Return the front element without removing it
+isEmpty() - Return true if the queue is empty
+
+Part 1 — Basic Queue Implementation
+Implement the queue using linked blocks, where each block is an array with maximum capacity of 5.
+
+Example 1
+Operations:
+
+queue = BlockQueue(blockSize=5)
+
+queue.enqueue(1)     // Block 0: [1]
+queue.enqueue(2)     // Block 0: [1, 2]
+queue.enqueue(3)     // Block 0: [1, 2, 3]
+queue.enqueue(4)     // Block 0: [1, 2, 3, 4]
+queue.enqueue(5)     // Block 0: [1, 2, 3, 4, 5] (full)
+queue.enqueue(6)     // Block 0: [1, 2, 3, 4, 5], Block 1: [6]
+
+queue.dequeue()      // Returns 1, Block 0: [2, 3, 4, 5]
+queue.dequeue()      // Returns 2, Block 0: [3, 4, 5]
+queue.peek()         // Returns 3
+
+Part 2 — Block Management
+Implement proper block allocation and deallocation:
+
+Allocation: When the last block is full and a new element is enqueued, create a new block
+Deallocation: When dequeueing causes the first block to become empty, remove that block
+
+Example 2
+Operations:
+
+queue = BlockQueue(blockSize=3)
+
+// Fill first block
+queue.enqueue(1)
+queue.enqueue(2)
+queue.enqueue(3)     // Block 0: [1, 2, 3] (full)
+
+// Create second block
+queue.enqueue(4)     // Block 0: [1, 2, 3], Block 1: [4]
+
+// Empty first block
+queue.dequeue()      // Returns 1, Block 0: [2, 3]
+queue.dequeue()      // Returns 2, Block 0: [3]
+queue.dequeue()      // Returns 3, Block 0 removed, now Block 0: [4]
+
+queue.dequeue()      // Returns 4, queue is now empty
+queue.isEmpty()      // Returns true
+
+Part 3 — Space-Efficient Design
+
+Optimize the implementation so that blocks can reuse space. Instead of always allocating new blocks 
+at the tail, consider using a circular buffer within each block to minimize allocations when there 
+are many enqueue/dequeue operations.
+
+Constraints :
+
+1 <= blockSize <= 1000
+The number of operations is in the range [1, 10^5]
+All values are integers in the range [-10^9, 10^9]
+All operations must run in amortized O(1) time

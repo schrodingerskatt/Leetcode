@@ -1,0 +1,66 @@
+Problem Statement : 
+
+You are helping users find the most cost-effective way to get all the services they want for their 
+rental property.
+
+You are given:
+
+A list of available service bundles, where each bundle contains a set of services and a price.
+A list of wanted services that the user needs.
+Your task is to find the minimum cost to obtain all wanted services and return the combination of 
+bundles to purchase.
+
+Note: Service names are case-insensitive (e.g., "WiFi" and "wifi" are the same).
+
+Example 1
+
+Input:
+bundles = [
+  ("wifi", 50),
+  ("parking", 30),
+  ("parking,TV", 70)
+],
+wanted = ["WiFi", "parking"]
+Output:
+
+cost = 80
+bundles = [("wifi", 50), ("parking", 30)]
+Explanation:
+
+To get both WiFi and parking, the cheapest option is to buy the WiFi bundle (50) and the parking 
+bundle (30) for a total of 80. The "parking,TV" bundle at 70 doesn't cover WiFi.
+
+
+Example 2
+
+Input:
+bundles = [
+  ("wifi,parking", 60),
+  ("wifi", 50),
+  ("parking", 30),
+  ("parking,pool,gym", 100)
+],
+wanted = ["wifi", "parking"]
+
+Output:
+cost = 60
+bundles = [("wifi,parking", 60)]
+
+Explanation: The bundle containing both WiFi and parking at 60 is cheaper than buying them 
+             separately (50 + 30 = 80).
+
+Example 3
+
+Input:
+bundles = [
+  ("wifi", 50),
+  ("parking", 30)
+],
+wanted = ["wifi", "parking", "pool"]
+
+Output:
+cost = -1
+bundles = []
+
+Explanation: No combination of bundles provides all wanted services. The "pool" service is not 
+             available in any bundle.

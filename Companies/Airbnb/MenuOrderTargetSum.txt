@@ -1,0 +1,30 @@
+Problem : Menu Order Equaling Target Sum
+
+You are given a menu containing prices of individual items. Given a target amount of money, find all
+possible combinations of menu items that sum exactly to the target value.
+
+Important Note: Due to floating-point precision issues when working with doubles, you should convert
+all prices to integers (e.g., by multiplying by 100) before processing. Discuss precision 
+requirements with your interviewer.
+
+Example 1
+
+Input:
+prices = [1.50, 2.00, 3.50]
+target = 5.00
+
+Output:
+[
+  [1.50, 3.50],
+  [2.00, 3.00]  // assuming 3.00 is achieved by 1.50 + 1.50
+]
+
+Explanation:
+
+The combinations that sum exactly to 5.00 are:
+
+1.50 + 3.50 = 5.00
+2.00 + 1.50 + 1.50 = 5.00 (if item can be ordered multiple times)
+Or if each item can only be ordered once:
+
+Only [1.50, 3.50] is valid

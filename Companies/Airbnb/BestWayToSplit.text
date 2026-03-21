@@ -1,0 +1,76 @@
+Problem : Best Way To Split Stay
+
+You are building a property recommendation system for vacation rentals. Given a list of available 
+properties, you need to find the optimal combination of properties to recommend for a group staying 
+in a specific neighborhood.
+
+Each property has:
+
+id: Unique identifier
+neighborhood: Location of the property
+capacity: Maximum number of guests it can accommodate
+Given a target neighborhood and group size, find a combination of properties that:
+
+Are all in the target neighborhood
+Have a minimum number of properties (fewer properties is preferred)
+Have a total capacity >= groupSize and as close to groupSize as possible (minimize wasted space)
+Return the list of property IDs for the optimal combination. If no valid combination exists, return 
+an empty array.
+
+Example 1
+Input:
+properties = [
+  Property(1, "downtown", 5),
+  Property(2, "downtown", 3),
+  Property(3, "downtown", 1),
+  Property(4, "uptown", 4),
+  Property(5, "uptown", 2)
+],
+neighborhood = "downtown",
+groupSize = 4
+
+Output: [1]
+Explanation:
+
+Only properties 1, 2, and 3 are in "downtown".
+
+Property 1 alone has capacity 5 (>= 4), using 1 property
+Properties 2+3 together have capacity 4 (>= 4), using 2 properties
+Property 1 is optimal because it uses fewer properties (1 vs 2).
+
+Example 2
+Input:
+properties = [
+  Property(1, "downtown", 5),
+  Property(2, "downtown", 3),
+  Property(3, "downtown", 1)
+],
+neighborhood = "downtown",
+groupSize = 10
+
+Output: []
+Explanation: The total capacity of all downtown properties is 5 + 3 + 1 = 9, which is less than 
+             groupSize 10. No valid combination exists.
+
+Example 3
+Input:
+properties = [
+  Property(1, "downtown", 5),
+  Property(2, "downtown", 3),
+  Property(3, "downtown", 1)
+],
+neighborhood = "downtown",
+groupSize = 6
+
+Output: [1, 3]
+
+Explanation:
+
+Valid combinations in downtown:
+
+[1]: capacity 5 < 6 (not valid)
+[1, 2]: capacity 8, uses 2 properties
+[1, 3]: capacity 6, uses 2 properties ← Optimal (exact match)
+[2, 3]: capacity 4 < 6 (not valid)
+[1, 2, 3]: capacity 9, uses 3 properties
+[1, 3] is optimal because it achieves exactly the group size with the minimum number of properties.

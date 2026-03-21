@@ -1,0 +1,21 @@
+Problem
+You are given a string pattern consisting only of the characters:
+
+'I' meaning the next digit is increasing
+'D' meaning the next digit is decreasing
+Construct the numerically smallest positive integer (as a string) that satisfies the pattern using 
+distinct digits from 1 to 9.
+
+Formally, if pattern has length n, you must output a string ans of length n + 1 such that for every i:
+
+if pattern[i] == 'I' , then ans[i] < ans[i+1]
+if pattern[i] == 'D' , then ans[i] > ans[i+1]
+Digits cannot repeat, and you may only use digits '1' through '9'.
+
+Input
+pattern : string of length n where 1 <= n <= 8
+
+Output
+The lexicographically/numerically smallest valid number as a string.
+Example
+pattern = "IID" → output could be "1243" (since 1<2<4>3 ).

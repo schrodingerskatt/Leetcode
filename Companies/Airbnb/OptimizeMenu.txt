@@ -1,0 +1,30 @@
+PROBLEM : Minimum Cost with Menu Combo Offers
+
+You are given N item types with unit prices, a list of S combo offers, and the required quantities 
+(needs) for each item. Each offer is a list of length N+1 where the first N entries are quantities 
+for each item and the last entry is the total offer price. Compute the minimum total cost to satisfy
+the needs exactly (no extra items allowed). You may use an offer multiple times as long as it never 
+causes any item's purchased quantity to exceed its remaining need.
+
+Examples :
+Input: prices = [2,5], offers = [[3,0,5],[1,2,10]], needs = [3,2]
+Output: 14
+
+Explanation: Using [1,2,10] once covers 1 of item0 and 2 of item1 for 10; buy remaining 2 of 
+item0 individually for 4; total = 14. Other choices cost 15 or 16.
+
+Input: prices = [3,2,4], offers = [[1,1,0,4],[0,2,1,7]], needs = [1,2,1]
+Output: 10
+
+Explanation: Either use [0,2,1,7] plus one unit of item0 (3) = 10, or use [1,1,0,4] then buy one 
+item1 (2) and one item3 (4) = 10.
+
+Constraints :
+
+1 <= N <= 6
+0 <= S <= 100
+0 <= needs[i] <= 10
+1 <= prices[i] <= 10^4
+Each offer is length N+1: first N non-negative integers are quantities, last is offer price (0 <= offer price <= 10^5)
+No extra items allowed: an offer can be applied only if all its quantities are <= the remaining needs
+All inputs are integers

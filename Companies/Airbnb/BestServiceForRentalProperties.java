@@ -14,6 +14,12 @@ class Solution {
         }
     }
 
+    /*
+    memo[mask]       → "what is the cheapest cost from this state?"
+    parent[mask]     → "where did we go after this state?"
+    usedBundle[mask] → "which bundle caused that transition?"
+    */
+
     Map<Integer, Integer> memo = new HashMap<>();
     Map<Integer, Integer> parent = new HashMap<>();
     Map<Integer, Integer> usedBundle = new HashMap<>();

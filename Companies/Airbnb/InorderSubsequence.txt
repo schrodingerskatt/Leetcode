@@ -1,0 +1,16 @@
+Problem : Check inorder subsequence and edit tree minimally
+
+Given a binary tree whose nodes store integers and an array target, determine whether target is a 
+subsequence of the tree's inorder traversal (elements must appear in the same relative order but not
+ necessarily contiguously). Aim for O(n) time.
+
+auxiliary space by streaming the traversal without storing it. 
+
+Follow-ups:
+Modify the tree so that its inorder traversal contains target as a subsequence. 
+Allowed operations: overwrite the value of any existing node or insert a new node anywhere in the 
+tree; each operation has cost 1.
+
+Compute the minimum number of operations required and output that minimum and one valid set of
+edits (or a modified tree) achieving it. Discuss edge cases (e.g., empty target, duplicates, target
+longer than traversal) and state time/space complexity for each part.

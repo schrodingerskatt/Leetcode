@@ -1,0 +1,25 @@
+ALGORITHM :
+
+The Algorithm :
+Since the graph is a DAG, you can use dynamic programming over a topological ordering — no 
+Bellman-Ford or Dijkstra needed.
+
+Steps:
+
+1. Topological sort all nodes (Kahn's algorithm or DFS-based)
+2. Initialize dp[start] = 0, and dp[v] = -∞ for all other nodes
+3. Relax in topological order: for each node u and each outgoing edge (u → v):
+   dp[v] = max(dp[v], dp[u] + w(v) - t(u, v))
+4. Find the answer: among all terminal nodes (name starts with _) that are reachable 
+   (i.e., dp[v] ≠ -∞), pick the one with the highest dp value
+5. Reconstruct the path by storing a parent pointer whenever you update dp[v]
+
+6. complexity : TopologicalSort O(V+E), DP Relaxation O(V+E), Path reconstruction O(V), 
+                Total Time O(V+E), Space O(V+E)
+7. Edge Cases to Handle :
+
+No terminal reachable: if all terminal nodes have dp[v] = -∞, output "no feasible path"
+Negative node scores: the algorithm handles these naturally (some paths may score negatively — you 
+                      still find the maximum)
+Multiple terminals: you check all of them at the end and pick the best
+   

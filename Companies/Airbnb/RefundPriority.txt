@@ -1,0 +1,17 @@
+Problem : Design refundable transaction ledger and prioritization rules
+
+Design and implement a transaction ledger that ingests a stream of records where each record is 
+either a payment or a refund. Each payment has {id, userId, amount, timestamp}; each refund has 
+{id, userId, amount, timestamp, optional paymentIdReference}. 
+
+1. Choose data structures to store payments and track remaining refundable amounts. 
+2. Implement APIs: addPayment(payment), addRefund(refund, rules), and getUserBalance(userId). 
+3. When a refund arrives without paymentIdReference, select which prior payment(s) to offset based 
+   on a provided priority rule set (e.g., a comparator that can express recency-first, amount-first,
+   or other tie-breakers). 
+4. Support partial refunds and multiple refunds against the same payment; ensure refunds cannot 
+   exceed a payment’s remaining refundable amount. 
+
+Input may interleave payments and refunds; for each refund, return the list of 
+(paymentId, refundedAmount) pairs it offsets. 
+Analyze time and space complexity of each operation and justify your data-structure choices.

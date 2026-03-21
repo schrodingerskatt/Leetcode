@@ -1,0 +1,28 @@
+Problem :
+
+You are given an integer array heights representing a 1D terrain (each index is a column height), 
+an integer V (units of water), and an index K where water is poured.
+
+Water is poured one unit at a time onto column K. For each unit:
+
+It first tries to flow left : starting from K , move left while the next column is not higher than 
+the current. Among all reachable positions on the left with the minimum height , the water settles 
+at the leftmost such position.
+If it cannot settle anywhere on the left (i.e., no strictly lower position than heights[K] was found
+by the left scan), it then tries to flow right symmetrically: move right while the next column is 
+not higher than the current. Among all reachable positions on the right with the minimum height ,
+the water settles at the rightmost such position.
+If neither side offers a lower position, the water settles at K .
+After placing all V units, return the resulting heights array.
+
+Input
+heights : array of non-negative integers
+V : non-negative integer (units of water)
+K : integer index ( 0 <= K < len(heights) )
+
+Output
+The final heights array after all water is poured.
+
+Notes
+Each water unit increases exactly one column height by 1 .
+The “scan” rules above must be followed precisely (tie-breaking included).

@@ -1,0 +1,10 @@
+PROBLEM : Maximize reward by scheduling jobs
+
+Given n jobs, each with a start time, end time, and reward, choose a subset of non-overlapping 
+jobs to maximize total reward. Return the maximum reward and one optimal set of job indices.
+
+Constraints: n up to 100,000; times within 32-bit or 64-bit integers; rewards non-negative. Aim for 
+O(n log n) time and near O(n) space. Explain your algorithm (e.g., sorting, binary search, and DP), 
+prove correctness, analyze complexity, and discuss edge cases such as identical start/end times and 
+zero-length jobs.
+

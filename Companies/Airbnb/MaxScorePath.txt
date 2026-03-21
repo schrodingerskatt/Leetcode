@@ -1,0 +1,11 @@
+Problem : Find max-score path in weighted DAG
+
+You are given a directed acyclic graph (DAG). Each node v has a score w(v). Each directed edge 
+(u→v) has a nonnegative time cost t(u,v). There is a unique start node literally named "start"
+with w(start)=0. A terminal node is any node whose name begins with an underscore "_". You may 
+traverse edges only in their given direction. For any path P from "start" to any terminal node, 
+define its total score as Score(P) = (sum of w(v) over all nodes v on P) − (sum of t(u,v) over 
+all edges on P). Compute the maximum Score(P) across all such paths and return both this maximum 
+value and one corresponding optimal path (as an ordered list of node names). If no terminal is 
+reachable from "start", indicate that no feasible path exists. Describe your algorithm and analyze 
+its time and space complexity.

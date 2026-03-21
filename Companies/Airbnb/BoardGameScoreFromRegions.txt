@@ -1,0 +1,26 @@
+Problem : Compute board-game score from regions
+
+You are given a 2D board for a board game. Each cell is encoded like G1 or W0:
+
+The first character is the terrain/area type (e.g., G , W , S ).
+The digit is the number of crowns in that cell (0–9).
+Two cells belong to the same area/region if they have the same terrain type and are connected by 
+4-directional adjacency (up/down/left/right).
+
+For each region:
+regionScore=(#cells in region)×(sum of crowns in region)
+Return the total score across all regions.
+
+Example
+Board (rows):
+
+G1, G2, W0, W1, S1
+G2, G3, W0, W1, S1
+S2, S3, S1, G1, S1
+G1, G2, W0, W1, S1
+G1, G2, W0, W1, S1
+Compute the total score for this board.
+
+Additional requirement
+Write a small set of self-contained test cases that cover edge cases (e.g., all same terrain, all 
+crowns 0, single-cell regions, multiple disjoint regions of same terrain type).

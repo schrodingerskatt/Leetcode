@@ -1,0 +1,8 @@
+Problem :
+
+You are given an m×n grid containing walls (#), open cells (.), a single start cell (@), up to six 
+keys labeled 'a'–'f', and matching doors 'A'–'F' that can be passed only after obtaining their 
+corresponding key. From any cell, you may move one step up, down, left, or right to an in-bounds 
+non-wall cell. Return the minimum number of steps required to collect all keys, or -1 if it is 
+impossible. Handle m, n up to 30. Describe your state representation, search strategy, pruning, and 
+how you detect revisits efficiently. Provide time and space complexity and key test cases.

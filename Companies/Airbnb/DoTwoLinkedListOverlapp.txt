@@ -1,0 +1,31 @@
+Problem Statement 
+
+You are given two singly linked lists that may contain cycles. Nodes are identified by integer IDs, 
+and all nodes live in a shared node pool (so overlap means the two heads can reach the same node ID).
+
+Determine whether the two lists overlap (share at least one node).
+
+A list may be:
+- Acyclic, ending at None
+- Cyclic, looping forever
+
+Return True if they overlap, otherwise False.
+
+Examples
+Input: ({1: 2, 2: 3, 3: None, 4: 5, 5: 3}, 1, 4)
+
+Output: True
+
+Explanation: List A: 1->2->3. List B: 4->5->3. They overlap at node 3.
+
+Input: ({1: 2, 2: 3, 3: 2, 4: 5, 5: 6, 6: 5}, 1, 4)
+
+Output: False
+
+Explanation: Two disjoint cycles: (2<->3) and (5<->6). No shared node.
+
+Constraints :
+0 <= number of nodes <= 2 * 10^5
+Node IDs are integers
+Each node has at most one next pointer
+Both heads may be None

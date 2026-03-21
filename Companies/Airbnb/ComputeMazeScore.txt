@@ -1,0 +1,19 @@
+Problem : Compute maze score using shortest path
+
+You are given a grid-based maze game.
+
+The maze is an R x C grid of characters:
+'#' = wall (cannot pass)
+'.' = empty cell
+'S' = current player position (exactly one)
+'E' = exit/goal (exactly one)
+The game “score” for a state is defined as the length of the shortest path (minimum number of moves)
+from S to E , moving 4-directionally (up/down/left/right) and not passing through walls.
+If E is unreachable, return -1 .
+Write a function that takes the maze grid and returns the score.
+
+Clarify in your solution:
+
+Time and space complexity
+How you would adapt it if the game state were provided separately as (startRow, startCol) instead
+of embedding 'S' in the grid.

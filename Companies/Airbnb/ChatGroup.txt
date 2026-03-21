@@ -1,0 +1,50 @@
+Problem : Chat Backend Event Processor (Recent Messages + Top-N Groups)
+
+Problem Statement :
+Implement a simplified in-memory chat backend for group chats. You are given a list of commands to 
+process in order.
+
+Supported commands:
+- ("CREATE_GROUP", group_id, members)
+    - `group_id`: string
+    - `members`: list of user IDs (strings)
+    - If group already exists, ignore.
+
+- ("SEND", group_id, user_id, text)
+    - Append message `text` to the group's message log **only if** the group exists and `user_id` 
+      is a member.
+    - Increases that group's message count by 1.
+
+- ("GET_RECENT", group_id, k)
+    - Return the last `k` message texts for that group, in chronological order.
+    - If group does not exist, return [].
+
+- ("TOP_N", n)
+    - Return a list of up to `n` group_ids with the highest total message counts.
+    - Tie-break by lexicographically smaller group_id.
+    - Include groups with 0 messages if needed.
+
+Return a list containing the result of each GET_RECENT and TOP_N command, in the order they appear.
+
+Examples :
+
+Input: ([('CREATE_GROUP', 'g1', ['u1', 'u2']), ('CREATE_GROUP', 'g2', ['u2']), ('SEND', 'g1', 'u1', 
+        'hi'), ('SEND', 'g1', 'u2', 'yo'), ('SEND', 'g2', 'u2', 'ok'), ('TOP_N', 2), 
+        ('GET_RECENT', 'g1', 10)])
+
+Output: [['g1', 'g2'], ['hi', 'yo']]
+
+Explanation: g1 has 2 msgs, g2 has 1. TOP_N returns ['g1','g2']. GET_RECENT returns all g1 messages.
+
+Input: ([('CREATE_GROUP', 'a', ['x']), ('CREATE_GROUP', 'b', ['x']), ('TOP_N', 2)])
+
+Output: [['a', 'b']]
+
+Explanation: Both have 0 messages; tie-break lexicographically.
+
+Constraints :
+1 <= len(commands) <= 2 * 10^5
+Total SEND commands <= 2 * 10^5
+1 <= k <= 10^4
+1 <= n <= 10^4
+Message text length <= 200

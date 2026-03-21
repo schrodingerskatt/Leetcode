@@ -1,0 +1,21 @@
+Problem : Find smallest permutation under constraints
+
+Given a non-negative integer n, consider its decimal digits as a multiset (digits can repeat).
+
+Return the smallest possible integer that can be formed by rearranging the digits of n , allowing 
+leading zeros (i.e., you are allowed to place 0 at the front; the result is still treated as an 
+integer value).
+
+Follow-up: Given an additional integer lowerBound , return the smallest integer strictly greater 
+           than lowerBound that can be formed by rearranging the digits of n . If no such number 
+           exists, return an indication such as -1 .
+
+Example : 
+
+n = 178 : smallest permutation (allow leading zeros) is 178 .
+Follow-up: n = 178 , lowerBound = 200 → answer is 718 .
+
+Constraints :
+
+You may assume n fits in 32-bit signed integer input, but intermediate permutations may exceed 
+32-bit; define how you handle overflow (e.g., use 64-bit or strings).

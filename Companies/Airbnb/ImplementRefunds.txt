@@ -1,0 +1,69 @@
+Problem : Implement Refunds
+AirBnB has a need to support refunds for our customers in case of booking changes or cancellations.
+
+Business Rules :
+A refund is always tied to a single payment
+The refund amount cannot exceed the payment amount
+A booking can be done with multiple payments, and could be made with multiple payment methods
+A single booking could have multiple refunds associated with it
+
+Refund Allocation Rules :
+You are given a list of transactions that have happened for a booking, and an amount of refund that
+is being requested. You need to return a list of refunds that can be applied to the existing payment
+methods to reach that amount.
+
+When choosing how to generate refunds, follow these rules:
+
+A payment should be fully refunded before using another payment
+The order of preferred payment methods is: Credit > Credit_Card > PayPal
+You should choose more recent payments first (within each payment method)
+
+Part 1 — Generate Refunds
+
+Given a list of payments for a booking and a requested refund amount, determine which payments to 
+refund and how much from each.
+
+Example 1 
+Input:
+payments = [
+    {"id": 1, "amount": 100, "method": "Credit_Card", "date": "2024-01-01"},
+    {"id": 2, "amount": 50, "method": "PayPal", "date": "2024-01-02"},
+    {"id": 3, "amount": 200, "method": "Credit", "date": "2024-01-03"}
+]
+
+refund_amount = 150
+
+Output:
+[
+    {"payment_id": 3, "refund_amount": 150}
+]
+
+Explanation:
+
+Credit has priority over Credit_Card and PayPal
+Payment 3 (Credit, most recent, $200) can cover the full refund
+Refund $150 from payment 3
+
+Example 2
+Input:
+payments = [
+    {"id": 1, "amount": 100, "method": "Credit_Card", "date": "2024-01-01"},
+    {"id": 2, "amount": 50, "method": "PayPal", "date": "2024-01-02"},
+    {"id": 3, "amount": 80, "method": "Credit", "date": "2024-01-03"}
+]
+
+refund_amount = 150
+
+Output:
+[
+    {"payment_id": 3, "refund_amount": 80},
+    {"payment_id": 1, "refund_amount": 70}
+]
+
+Explanation:
+
+First, use Credit (highest priority) - payment 3 has $80, fully refund it
+Still need $70 more ($150 - $80 = $70)
+Next priority is Credit_Card - payment 1 has $100
+Refund remaining $70 from payment 1
+PayPal is not needed

@@ -1,116 +1,139 @@
 import java.util.*;
+import java.time.LocaDate;
 
-class Solution{
+public class RefundGenerator{
 
-    static class Payment{
-        String paymentId;
-        String method;
-        String date;
-        double amountPaid;
-
-        Payment(String paymentId, String method, String date, double amountPaid){
-            this.paymentId = paymentId;
-            this.method = method;
-            this.date = date;
-            this.amountPaid = amountPaid;
-        }
+    public static final Map<String, Integer> METHOD_PRIORITY = new HashMap<>();
+    static{
+        METHOD_PRIORITY.put("Credit", 0);
+        METHOD_PRIORITY.put("Creidt_Card", 1);
+        METHOD_PRIORITY.put("PayPal", 2);
     }
 
-    static class Refund{
-        String paymentId;
-        double amountRefunded;
+    public static class Payment{
 
-        Refund(String id, double amountRefunded){
+        int id;
+        double amount;
+        String method;
+        LocalDate date;
+
+        public Payment(int id, double amount, String method, String date){
             this.id = id;
-            this.amountRefunded = amountRefunded;
-        }
-    }
-
-    static class PaymentNode{
-
-        String paymentId;
-        String method;
-        String date;
-        double remaining;
-
-        PaymentNode(String id, String method, String date, double remaining){
-            this.paymentId = id;
-            this.method = method;
-            this.date = date;
-            this.remaining = remaining;
-        }
-    }
-
-    static class Allocation{
-
-        String paymentId;
-        String method;
-        String amount;
-
-        Allocation(String paymentId, String method, String amount){
-            this.paymentId = paymentId;
-            this.method = method;
             this.amount = amount;
+            this.method = method;
+            this.date = LocaDate.parse(date);
         }
     }
 
-    static class Result{
-        List<Allocation>allocations;
-        double shortfall;
+    public static class Refund{
+        int paymentId;
+        double refundAmount;
 
-        Result(List<Allocation>allocations, double shortfall){
-            this.allocations = allocations;
-            this.shortfall = shortfall;
+        public Refund(int paymentId, double refundAmount){
+            this.paymentId = paymentId;
+            this.refundAmount = refundAmount;
+        }
+
+        @Override
+        public String toString() {
+            return "{payment_id: " + paymentId + ", refund_amount: " + refundAmount + "}";
         }
     }
 
-    public Result allocateRefund(List<Payment> payments, List<Refund> existingRefunds, 
-                                 double refundRequest){
+    // Support for PART-2 : tracks how much has already been refunded per payment
+    public static class PaymentState{
+        Payment payment;
+        double refundedsoFar;
 
-    // Aggregate refunds per payment
-    Map<String, Double> refundedMap = new HashMap<>();
-    for(Refund r : existingRefunds){
-        refundedMap.put(r.paymentId, refundedMap.getOrDefault(r.paymentId, 0.0)+r.amountRefunded);
-    }
-
-    // Build payment nodes with remaining amount
-    Map<String, List<PaymentNode>> methodMap = new HashMap<>();
-
-    for(Payment p : payments){
-        double refunded = refundedMap.getOrDefault(p.paymentId, 0.0);
-        double remaining = Math.max(0, p.amountPaid-refunded);
-        if(remaining <= 0) continue;
-        methodMap.computeIfAbsent(p.method, k -> new ArrayList<>())
-        .add(new PaymentNode(p.paymentId, p.method, p.date, remaining));
-    }
-
-    // 3. Sort each method group by date DESC (most recent first)
-    for(List<PaymentNode> list : methodMap.values()){
-        list.sort((a, b) -> b.date.compareTo(a.date)); // ISO date works lexicographically
-    }
-
-    // 4. Method priority Order
-    List<String> priority = Arrays.asList("CREDT", "CREDIT_CARD", "PAYPAL");
-    List<Allocation> result = new ArrayList<>();
-
-    double remainingRequest = refundRequest;
-
-    // 5. Greedy allocation
-    for(String method : priority){
-        if(!methodMap.containsKey(method)) continue;
-
-        for(PaymentNode : methodMap.get(method)){
-            if(remainingRequest <= 0) break;
-
-            double allocate = Math.min(node.remaining, remainingRequest);
-            result.add(new Allocation(node.paymentId, method, allocate));
-            remainingRequest -= allocate;
-            node.remaining -= allocate;
+        public PaymentState(Payment payment){
+            this.payment = payment;
+            refundedsoFar = 0;
         }
-        if(remainingRequest <= 0) break;
+
+        public double remaining(){
+            payment.amount - refundedsoFar;
+        }
     }
 
-    return new Result(result, remainingRequest);
+    // Part 2: holds state across multiple refund requests
+    public static class BookingRefundManager{
 
+        Map<Integer, PaymentState> paymentStates = new LinkedHashMap<>();
+        public BookingRefundManager(List<Payment> payments) {
+            for (Payment p : payments) {
+                paymentStates.put(p.id, new PaymentState(p));
+            }
+        }
+        public List<Refund> generateRefunds(double refundAmount) {
+
+            // Step 1: Validate against remaining refundable amount
+            double totalRemaining = 0;
+            for (PaymentState ps : paymentStates.values()) {
+                totalRemaining += ps.remaining();
+            }
+            if (refundAmount > totalRemaining) {
+                throw new IllegalArgumentException(
+                    "Refund amount " + refundAmount + " exceeds remaining refundable amount " + totalRemaining
+                );
+            }
+
+            // Step 2: Sort by priority and date (same as Part 1)
+            List<PaymentState> sorted = new ArrayList<>(paymentStates.values());
+            Collections.sort(sorted, (ps1, ps2) -> {
+                int methodCompare = METHOD_PRIORITY.getOrDefault(ps1.payment.method, 99)
+                                  - METHOD_PRIORITY.getOrDefault(ps2.payment.method, 99);
+                if (methodCompare != 0) return methodCompare;
+                return ps2.payment.date.compareTo(ps1.payment.date);
+            });
+
+            // Step 3: Greedy allocation on REMAINING amount (not original)
+            List<Refund> refunds = new ArrayList<>();
+            double remaining = refundAmount;
+
+            for (PaymentState ps : sorted) {
+                if (remaining <= 0) break;
+                if (ps.remaining() <= 0) continue;   // skip fully refunded payments
+
+                double refund = Math.min(ps.remaining(), remaining);
+                refunds.add(new Refund(ps.payment.id, refund));
+
+                ps.refundedSoFar += refund;           // ← update state for next request
+                remaining -= refund;
+            }
+
+            return refunds;
+        }
+    }
+
+    // Below is for PART 1
+
+    public static List<Refund> generateRefunds(List<Payment> payments, double refundAmount){
+        double totalPayments = 0;
+        for(Payment p : payments){
+            totalPayments += p.amount;
+        }
+        if(refundAmount > totalPayments){
+            throw new IllegalArgumentException(
+                "Refund amount " + refundAmount + " exceeds total payments " + totalPayments
+            );
+        }
+
+        List<Payment>sorted = new ArrayList<>(payments);
+        Collections.sort(sorted, (p1, p2) -> {
+            int methodCompare = METHOD_PRIORITY.getOrDefault(p1.method, 99)
+                              - METHOD_PRIORITY.getOrDefault(p2.method, 99);
+            if(methodCompare != 0) return methodCompare;
+            return p2.date.compareTo(date1);
+        });
+
+        List<Refund> refunds = new ArrayList<>();
+        double remaining = refundAmount;
+        for(Payment payment : sorted){
+            if(remaining <= 0) break;
+            double refund = Math.min(payment.amount, remaining);
+            refunds.add(new Refund(payment.id, refund));
+            remaining -= refund;
+        }
+    return refunds;
     }
 }

@@ -1,0 +1,38 @@
+Problem : Shortest Maze Path
+
+Question : You are in a maze that is represented as a grid of cells, where each cell is either empty
+           (O) or blocked (X). You can move up, down, left, or right to adjacent cells that aren't 
+           blocked. You're given a start position and an end position. Find the shortest path length
+           from the start to the end position. Return the minimum number of steps required to reach 
+           the end, or -1 if no path exists.
+Given a 2D grid representing the maze, a start position (row, col), and an end position (row, col), 
+find the shortest path length from start to end.
+
+Input:
+maze = [
+    ['O', 'O', 'X', 'O'],
+    ['O', 'X', 'O', 'X'],
+    ['O', 'O', 'O', 'X'],
+    ['X', 'O', 'O', 'O']
+]
+
+start = (0, 0)
+end = (3, 3)
+
+Grid representation:
+S = Start (0,0), E = End (3,3), X = Blocked, O = Empty
+
+    0    1    2    3
+0   S    O    X    O
+1   O    X    O    X
+2   O    O    O    X
+3   X    O    O    E
+
+Shortest path (length 7):
+(0,0) → (1,0) → (2,0) → (2,1) → (2,2) → (1,2) → (0,2)? No, (0,2) is X
+
+Correct path:
+(0,0) → (1,0) → (2,0) → (2,1) → (3,1) → (3,2) → (3,3)
+   S      ↓      ↓      →      →      →      E
+
+Output: 7

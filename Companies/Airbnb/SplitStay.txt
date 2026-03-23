@@ -1,0 +1,24 @@
+You are implementing a simplified “split stay” feature.
+
+Problem
+You are given:
+
+n hotels (or listings), indexed 0..n-1 .
+For each hotel i , an unsorted list avail[i] of integer dates (e.g., days since epoch) indicating the dates that hotel is available.
+A requested inclusive date range [start_date, end_date] .
+A split stay means the guest stays in two different hotels in two contiguous, non-empty segments that exactly cover the requested range:
+
+Choose a split point s such that start_date ≤ s < end_date .
+Hotel A must be available for every date in [start_date, s] .
+Hotel B must be available for every date in [s+1, end_date] .
+The stay is “forward only”: the first segment is earlier than the second; no interleaving/overlap beyond the shared boundary between s and s+1 .
+Hotels must be different: A != B .
+Output
+Return all distinct valid combinations as tuples: (A, B, s) meaning hotel A covers the left segment [start_date, s] and hotel B covers the right segment [s+1, end_date].
+
+Notes:
+
+If avail[i] contains duplicates, they should not create duplicate output tuples.
+If no split stay is possible, return an empty list.
+Example (informal)
+If [start_date, end_date] = [10, 13] and a split s=11 is chosen, then hotel A must cover dates {10,11} and hotel B must cover {12,13}.

@@ -1,0 +1,30 @@
+Problem : Maximize Task Points
+
+You are given a set of tasks, each with a deadline and a reward (profit) for completing it. 
+Each task takes exactly one day to complete, and only one task can be scheduled per day.
+Your goal is to schedule tasks such that:
+
+Each scheduled task is completed on or before its deadline
+The total reward is maximized
+Return the scheduled task order and the maximum total reward achievable.
+
+Input:
+tasks = [
+  ("A", 2, 100),  // (task_id, deadline, profit)
+  ("B", 1, 50),
+  ("C", 2, 10),
+  ("D", 3, 20)
+]
+
+Output:
+order = ["B", "A", "D"]
+max_profit = 170
+
+Explanation:
+
+Day 1: Schedule task B (deadline 1, profit 50) Day 2: Schedule task A (deadline 2, profit 100) 
+Day 3: Schedule task D (deadline 3, profit 20)
+
+Total profit = 50 + 100 + 20 = 170
+Task C is not scheduled because it would conflict with the higher-profit task A (both have deadline 2).
+

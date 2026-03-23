@@ -1,0 +1,14 @@
+Problem : Design mutable sum-tree with fast queries
+
+You're given a rooted, mutable tree. Each leaf node stores an integer value. Each internal node's 
+value equals the sum of its immediate children's values. 
+
+Design data structures and functions to: 
+(a) return the current value of any node by id efficiently after preprocessing
+(b) support two mutations: toLeaf(nodeId, value) converts any node into a leaf with the given 
+    value (removing its prior subtree), and toParent(nodeId, subtree) converts a leaf into an 
+    internal node by attaching a provided subtree whose leaves hold integers. 
+(c) After any sequence of mutations, getValue(nodeId) must remain correct and efficient. 
+    Specify algorithms, update/query complexities, how you maintain parent/child links and subtree 
+    sums, and how you handle edge cases (deleting/reattaching subtrees, empty children, overflow, 
+    very deep trees).

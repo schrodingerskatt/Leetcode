@@ -47,7 +47,7 @@ class ChatBackend {
         Group g = groups.get(groupId);
         if (!g.members.contains(userId)) return;
 
-        // remove before update ⚠️
+        // remove before update 
         sortedGroups.remove(g);
 
         g.messages.add(text);

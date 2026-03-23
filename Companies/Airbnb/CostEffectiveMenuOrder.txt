@@ -1,0 +1,40 @@
+Problem : Most Cost Effective Menu Order
+
+You are building an app that helps users determine the most cost-effective order they can place at a
+restaurant for the food items they want.
+
+You are given:
+
+A menu containing individual items and combo deals (bundles of items at a discounted price)
+A list of items the user wants to eat
+Your task is to find the minimum cost to obtain all wanted items and return which menu items to order.
+
+Rules:
+
+1. Each wanted item must be obtained exactly once (no duplicates needed)
+2. You can order any combination of menu items (individual or combos)
+3. Combo items provide multiple items at a single price
+
+Input:
+menu = [
+  [5.00, ["pizza"]],
+  [8.00, ["sandwich", "coke"]],
+  [4.00, ["pasta"]],
+  [2.00, ["coke"]],
+  [6.00, ["pasta", "coke", "pizza"]],
+  [8.00, ["burger", "coke", "pizza"]],
+  [5.00, ["sandwich"]]
+],
+wanted = ["sandwich", "pasta", "coke"]
+
+Output:
+min_cost = 11.00
+orders = [["sandwich", "coke"], ["pasta"]]
+// or: [[8.00, ["sandwich", "coke"]], [4.00, ["pasta"]]]
+
+Explanation:
+
+To get sandwich, pasta, and coke:
+Option 1: Buy sandwich+coke combo (8.00) + pasta (4.00) = 12.00
+Option 2: Buy sandwich (5.00) + pasta (4.00) + coke (2.00) = 11.00 ← Optimal
+The minimum cost is 11.00.

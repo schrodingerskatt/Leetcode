@@ -1,79 +1,96 @@
 import java.util.*;
-class Solution{
 
-private static final int ROWS = 6;
-private static final int COLS = 7;
-private static final int[][] DIRECTIONS = {
-        {0, 1},   // horizontal
-        {1, 0},   // vertical
-        {1, 1},   // diagonal ↘
-        {-1, 1}   // diagonal ↗
-};
+public class ConnectFour {
 
-private static void main(String[] args){
-    int[] moves = {2,2,2,2,2,2,2,2,2,2,2};
-    char[][] result = playGame(moves);
-    printBoard(result);
-}
+    private static final int ROWS = 6;
+    private static final int COLS = 7;
 
-public static char[][] playGame(int[] moves){
-    char[][] board = new char[ROWS][COLS];
-    for(char[] row : board){
-        Arrays.fill(row, ' ');
+    public static void main(String[] args) {
+        int[] moves = {2,2,2,2,2,2,2,2,2,2,2};
+        char[][] result = playGame(moves);
+        printBoard(result);
     }
-    char currentPlayer = 'O';
-    for(int move : moves){
 
-        if(move < 0 || move >= COLS) break;
-        int row = dropToken(board, move, currentPlayer);
-        if(row == -1) break;
-
-        if(isWiningMove(board, row, move, currentPlayer)) break;
-        currentPlayer = (currentPlayer == '0') ? 'X':'O';
-    }
-    return board;
-}
-
-private static int dropToken(char[][] board, int col, char player){
-    for(int r = ROWS-1; r >= 0; r--){
-        if(board[r][c] == ' '){
-            board[r][c] = player;
-            return r;
+    public static char[][] playGame(int[] moves) {
+        char[][] board = new char[ROWS][COLS];
+        for (char[] row : board) {
+            Arrays.fill(row, ' ');
         }
+
+        char currentPlayer = 'O';
+
+        for (int move : moves) {
+
+            if (move < 0 || move >= COLS) break;
+
+            int row = dropToken(board, move, currentPlayer);
+            if (row == -1) break;
+
+            if (isWinningMove(board, row, move, currentPlayer)) {
+                System.out.println("Winner: " + currentPlayer);
+                break;
+            }
+
+            currentPlayer = (currentPlayer == 'O') ? 'X' : 'O';
+        }
+
+        return board;
     }
-    return -1;
-}
 
-private static boolean isWinningMove(char[][] board, int r, int c, char player){
+    private static int dropToken(char[][] board, int col, char player) {
+        for (int r = ROWS - 1; r >= 0; r--) {
+            if (board[r][col] == ' ') {
+                board[r][col] = player;
+                return r;
+            }
+        }
+        return -1;
+    }
 
-    int[][] directions  = {
-        {0, 1},   // horizontal
-        {1, 0},   // vertical
-        {1, 1},   // diagonal ↘
-        {-1, 1}   // diagonal ↗
-    };
+    private static boolean isWinningMove(char[][] board, int r, int c, char player) {
 
-    for(int[] dir : directions){
-        int dr = dir[0], dc = dir[1];
-        int count = 1; // current cell
+        int[][] directions = {
+                {0, 1},
+                {1, 0},
+                {1, 1},
+                {-1, 1}
+        };
 
-        // forward
-        int forward = count(board, r, c, dr, dc, player);
-        int backward = count(board, r, c, -dr, -dc, player);
-        count+=forward+backward;
-        if(count >= 4) return true;
+        for (int[] dir : directions) {
+            int dr = dir[0], dc = dir[1];
+
+            int count = 1;
+            count += countDirection(board, r, c, dr, dc, player);
+            count += countDirection(board, r, c, -dr, -dc, player);
+
+            if (count >= 4) return true;
+        }
 
         return false;
     }
-}
 
-private static void printBoard(char[][] board){
-    for(int r = 0; r < ROWS; r++){
-        System.out.print("|");
-    for(int c = 0; c < COLS; c++){
-        System.out.print(board[r][c]+ "|");
+    private static int countDirection(char[][] board, int r, int c, int dr, int dc, char player) {
+        int count = 0;
+
+        r += dr;
+        c += dc;
+
+        while (r >= 0 && r < ROWS && c >= 0 && c < COLS && board[r][c] == player) {
+            count++;
+            r += dr;
+            c += dc;
+        }
+
+        return count;
     }
-    System.out.println();
+
+    private static void printBoard(char[][] board) {
+        for (int r = 0; r < ROWS; r++) {
+            System.out.print("|");
+            for (int c = 0; c < COLS; c++) {
+                System.out.print(board[r][c] + "|");
+            }
+            System.out.println();
+        }
     }
-}
 }
